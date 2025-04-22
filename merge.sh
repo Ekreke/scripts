@@ -6,6 +6,7 @@ set -e
 # 定义颜色输出
 GREEN='\033[0;32m'
 RED='\033[0;31m'
+YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # 默认分支名称
@@ -23,9 +24,23 @@ handle_error() {
     exit 1
 }
 
-# 检查是否有未提交的更改
+# 检查并显示未提交的更改
 if ! git diff-index --quiet HEAD --; then
-    handle_error "有未提交的更改，请先提交或存储您的更改"
+    echo -e "${YELLOW}发现未提交的更改:${NC}"
+    echo "----------------------------------------"
+    # 显示已修改但未暂存的文件
+    echo -e "${YELLOW}已修改但未暂存的文件:${NC}"
+    git diff --stat
+    
+    # 显示已暂存但未提交的文件
+    echo -e "\n${YELLOW}已暂存但未提交的文件:${NC}"
+    git diff --cached --stat
+    
+    # 显示未跟踪的文件
+    echo -e "\n${YELLOW}未跟踪的文件:${NC}"
+    git ls-files --others --exclude-standard
+    echo "----------------------------------------"
+    handle_error "请先提交或存储上述更改"
 fi
 
 # 切换到develop分支并更新
