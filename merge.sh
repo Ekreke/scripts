@@ -43,4 +43,8 @@ git checkout ${FEATURE_BRANCH} || handle_error "无法切换到 ${FEATURE_BRANCH
 show_status "合并 ${DEVELOP_BRANCH} 到 ${FEATURE_BRANCH}..."
 git merge ${DEVELOP_BRANCH} || handle_error "合并过程中发生冲突"
 
-show_status "完成！成功将 ${DEVELOP_BRANCH} 合并到 ${FEATURE_BRANCH}"
+# 推送更新到远程仓库
+show_status "推送 ${FEATURE_BRANCH} 到远程仓库..."
+git push origin ${FEATURE_BRANCH} || handle_error "推送到远程仓库失败"
+
+show_status "完成！成功将 ${DEVELOP_BRANCH} 合并到 ${FEATURE_BRANCH} 并推送到远程仓库"
