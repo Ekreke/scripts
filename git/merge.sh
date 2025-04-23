@@ -10,8 +10,8 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # 默认分支名称
-FEATURE_BRANCH="feature/jp_dev"
-DEVELOP_BRANCH="develop"
+FEATURE_BRANCH="${GIT_SYNC_FEATURE_BRANCH:-feature/jp_dev}"
+DEVELOP_BRANCH="${GIT_SYNC_DEVELOP_BRANCH:-develop}"
 
 # 显示执行状态的函数
 show_status() {
