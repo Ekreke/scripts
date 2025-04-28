@@ -1,0 +1,45 @@
+# Go 相关
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work
+
+# IDE 相关
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+*.sublime*
+*.atom*
+
+# 依赖目录
+vendor/
+bin/
+dist/
+
+# 日志文件
+*.log
+logs/
+
+# 环境变量文件
+.env
+.env.*
+
+# 临时文件
+tmp/
+temp/
+
+# 编译输出
+build/
+debug/
+
+# 系统文件
+.DS_Store
+Thumbs.db 
+
+*test.go

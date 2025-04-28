@@ -1,0 +1,24 @@
+# api health check
+
+# global config
+settings:
+  check_interval: 300 
+  curl_timeout: 10 
+  connect_timeout: 5  
+  inspection_interval: "0 20 9 * * *"  
+
+# feishu webhook config 
+feishu:
+  webhook_url: "put your feishu webhook url here"
+  # if active
+  notify_on_failure: true
+
+# website apikey config
+services:
+    apikey: "GffhD6JFrXBfs8A4VQMWnMO9VvSB5Iws"
+
+# example for ssl config
+ssl:
+  domains:
+    - url: "tech.ekreke.cn"
+      port: 8443
