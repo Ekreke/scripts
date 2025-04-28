@@ -12,12 +12,24 @@ fi
 # 从 INI 文件读取分支配置
 FEATURE_BRANCH=$(sed -n 's/^personal_branch[[:space:]]*=[[:space:]]*\(.*\)/\1/p' "$CONFIG_FILE")
 DEVELOP_BRANCH=$(sed -n 's/^target_branch[[:space:]]*=[[:space:]]*\(.*\)/\1/p' "$CONFIG_FILE")
+GIT_USERNAME=$(sed -n 's/^username[[:space:]]*=[[:space:]]*\(.*\)/\1/p' "$CONFIG_FILE")
+GIT_EMAIL=$(sed -n 's/^email[[:space:]]*=[[:space:]]*\(.*\)/\1/p' "$CONFIG_FILE")
 
 # 检查是否成功读取配置
 if [ -z "$FEATURE_BRANCH" ] || [ -z "$DEVELOP_BRANCH" ]; then
     echo "错误: 无法从配置文件读取分支信息"
     exit 1
 fi
+
+if [ -z "$GIT_USERNAME" ] || [ -z "$GIT_EMAIL" ]; then
+    echo "错误: 无法从配置文件读取Git用户信息"
+    exit 1
+fi
+
+# 配置Git用户信息
+git config --global user.name "$GIT_USERNAME"
+git config --global user.email "$GIT_EMAIL"
+echo "Git用户信息已配置完成"
 
 # 获取当前使用的shell
 current_shell=$(basename "$SHELL")
