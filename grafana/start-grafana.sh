@@ -31,6 +31,10 @@ print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
+print_success() {
+    echo -e "${GREEN}[SUCCESS]${NC} $1"
+}
+
 # Check if Docker is running
 if ! docker info > /dev/null 2>&1; then
     print_error "Docker is not running. Please start Docker first."
@@ -47,6 +51,13 @@ fi
 # Create necessary directories for persistent storage
 print_info "Creating directories for persistent storage..."
 mkdir -p grafana-data/{data,provisioning,logs}
+
+# Set proper permissions for Grafana (Grafana runs as user ID 472)
+print_info "Setting proper permissions for Grafana..."
+sudo chown -R 472:472 grafana-data/ 2>/dev/null || {
+    print_warning "Could not set permissions with sudo. You may experience permission issues."
+    print_warning "To fix this manually, run: sudo chown -R 472:472 grafana-data/"
+}
 
 # Build the Docker image
 print_info "Building Grafana Docker image..."
@@ -84,7 +95,7 @@ if docker ps --format 'table {{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
     echo ""
     echo "🛠️  Useful commands:"
     echo "   View logs: docker logs ${CONTAINER_NAME}"
-    echo "   Stop service: docker stop ${CONTAINER_NAME}"
+    echo "   Stop service: ./stop-grafana.sh"
     echo "   Remove service: docker rm ${CONTAINER_NAME}"
 else
     print_error "Failed to start Grafana service. Check the logs with 'docker logs ${CONTAINER_NAME}'"
