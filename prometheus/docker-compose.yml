@@ -23,44 +23,17 @@ services:
     restart: unless-stopped
     depends_on:
       - node-exporter
-      - cadvisor
 
   node-exporter:
     image: prom/node-exporter:v1.8.2
     container_name: node-exporter
-    command:
-      - '--path.rootfs=/host'
-      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
     ports:
       - "9100:9100"
-    volumes:
-      - /:/host:ro,rslave
     networks:
       - prometheus_net
     restart: unless-stopped
 
-  cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.49.1
-    container_name: cadvisor
-    command:
-      - '--port=8080'
-      - '--docker_only=true'
-      - '--store_container_labels=false'
-    ports:
-      - "8080:8080"
-    volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:rw
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
-      - /dev/disk/:/dev/disk:ro
-    privileged: true
-    devices:
-      - /dev/kmsg
-    networks:
-      - prometheus_net
-    restart: unless-stopped
-
+  
   grafana:
     image: grafana/grafana:11.2.2
     container_name: grafana

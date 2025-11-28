@@ -25,12 +25,7 @@ scrape_configs:
       - targets: ['node-exporter:9100']
     scrape_interval: 10s
 
-  - job_name: 'cadvisor'
-    static_configs:
-      - targets: ['cadvisor:8080']
-    scrape_interval: 10s
-    metrics_path: '/metrics'
-
+  
   - job_name: 'grafana'
     static_configs:
       - targets: ['grafana:3000']
@@ -43,12 +38,7 @@ scrape_configs:
     honor_labels: true
     scrape_interval: 10s
 
-  - job_name: 'docker-registry'
-    static_configs:
-      - targets: ['registry:5000']
-    scrape_interval: 30s
-    metrics_path: '/metrics'
-
+  
   - job_name: 'blackbox-http'
     metrics_path: /probe
     params:
