@@ -1,0 +1,3 @@
+-- Create additional users if needed
+-- Example: CREATE USER test_user WITH PASSWORD 'test_password';
+-- Example: GRANT ALL PRIVILEGES ON DATABASE test_db TO test_user;

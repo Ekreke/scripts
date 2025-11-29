@@ -1,0 +1,2 @@
+-- Create additional databases if needed
+-- Example: CREATE DATABASE test_db;
